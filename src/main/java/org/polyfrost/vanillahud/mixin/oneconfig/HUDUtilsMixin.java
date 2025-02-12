@@ -20,7 +20,7 @@ public class HUDUtilsMixin {
     @Inject(method = "addHudOptions", at = @At("TAIL"))
     private static void hudUtils$modifyOptions(OptionPage page, Field field, Object instance, Config config, CallbackInfo ci) {
         Hud hud = (Hud) ConfigUtils.getField(field, instance);
-        if (!(hud instanceof TabList.TabHud) && !(hud instanceof Scoreboard.ScoreboardHUD)) return;
+        if (!(hud instanceof Scoreboard.ScoreboardHUD)) return;
         HudCore.hudOptions.removeIf(HUDUtilsMixin::hudUtils$addDependency);
         HUD hudAnnotation = field.getAnnotation(HUD.class);
         ConfigUtils.getSubCategory(page, hudAnnotation.category(), hudAnnotation.subcategory()).options.removeIf(HUDUtilsMixin::hudUtils$addDependency);
@@ -30,19 +30,10 @@ public class HUDUtilsMixin {
         String fieldName = option.getField().getName();
         if (fieldName.contains("pingLevel")) fieldName = "pingLevel";
         Object hud = option.getParent();
-        boolean isTabList = hud instanceof TabList.TabHud;
         boolean isScoreboard = hud instanceof Scoreboard.ScoreboardHUD;
-        if (!isTabList && !isScoreboard) return false;
         switch (fieldName) {
             case "pingType":
             case "hideFalsePing":
-            case "pingLevel":
-                option.addDependency("showPing", () -> TabList.TabHud.showPing);
-                option.addDependency("numberPing", () -> TabList.TabHud.numberPing);
-                break;
-            case "numberPing":
-                option.addDependency("showPing", () -> TabList.TabHud.showPing);
-                break;
             case "scorePointsColor":
                 option.addDependency("scoreboardPoints", () -> Scoreboard.ScoreboardHUD.scoreboardPoints > 0);
                 break;

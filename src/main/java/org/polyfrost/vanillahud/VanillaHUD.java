@@ -64,7 +64,6 @@ public class VanillaHUD {
 
         checkForSkyHanni();
         doDebugMigration();
-        updateHeight();
         doPatcherMigration();
     }
 
@@ -224,14 +223,6 @@ public class VanillaHUD {
                 ModConfig.scoreboard.hud.showInDebug = true;
                 ModConfig.scoreboard.save();
             }
-            if (!TabList.hud.showInDebug) {
-                TabList.hud.showInDebug = true;
-                ModConfig.tab.save();
-            }
-            if (TabList.TabHud.selfAtTop) {
-                TabList.TabHud.selfAtTop = false;
-                ModConfig.tab.save();
-            }
             if (!ModConfig.title.titleHUD.showInDebug) {
                 ModConfig.title.titleHUD.showInDebug = true;
                 ModConfig.title.save();
@@ -245,15 +236,7 @@ public class VanillaHUD {
         }
     }
 
-    private void updateHeight() {
-        if (!TabList.TabHud.updatedHeight) {
-            TabList.TabHud.updatedHeight = true;
-            if (TabList.hud.position.getY() == 10) {
-                TabList.hud.position.setY(TabList.hud.position.getY() + 10);
-                ModConfig.tab.save();
-            }
-        }
-    }
+
 
     private void doPatcherMigration() {
         if (isPatcher) {
@@ -279,26 +262,7 @@ public class VanillaHUD {
                     saveTitle = true;
                 }
 
-                if (OldPatcherConfig.toggleTab) {
-                    TabList.TabHud.displayMode = true;
-                    saveTab = true;
-                }
-                if (OldPatcherConfig.tabOpacity != 1.0F) {
-                    TabList.hud.getBackgroundColor().setAlpha((int) (TabList.hud.getBackgroundColor().getAlpha() * OldPatcherConfig.tabOpacity));
-                    TabList.TabHud.tabWidgetColor.setAlpha((int) (TabList.TabHud.tabWidgetColor.getAlpha() * OldPatcherConfig.tabOpacity));
-                    saveTab = true;
-                }
-                if (OldPatcherConfig.tabPlayerCount != 80) {
-                    TabList.TabHud.tabPlayerLimit = OldPatcherConfig.tabPlayerCount;
-                    saveTab = true;
-                }
-                if (!OldPatcherConfig.tabHeightAllow) {
-                    TabList.hud.position.setY(TabList.hud.position.getY() - 10);
-                    saveTab = true;
-                } else if (OldPatcherConfig.tabHeight != 10) {
-                    TabList.hud.position.setY(TabList.hud.position.getY() + (OldPatcherConfig.tabHeight - 10));
-                    saveTab = true;
-                }
+
 
                 if (OldPatcherConfig.shadowedActionbarText) {
                     ModConfig.actionBar.hud.setTextType(1);
@@ -311,9 +275,6 @@ public class VanillaHUD {
 
                 if (saveTitle) {
                     ModConfig.title.save();
-                }
-                if (saveTab) {
-                    ModConfig.tab.save();
                 }
                 if (saveActionBar) {
                     ModConfig.actionBar.save();
@@ -342,7 +303,8 @@ public class VanillaHUD {
     }
 
     private static boolean isSkyHanniCompactTab() {
-        if (!isSkyHanni) return false;
+        return false;
+        /*if (!isSkyHanni) return false;
         if (forceDisableCompactTab) {
             return Utils.inSkyblock;
         }
@@ -352,7 +314,7 @@ public class VanillaHUD {
         } else {
             if (!SkyHanniMod.getFeature().gui.compactTabList.enabled.get()) return false;
         }
-        return TabListReader.INSTANCE.getRenderColumns() != null;
+        return TabListReader.INSTANCE.getRenderColumns() != null;*/
     }
 
     public static boolean isSkyHanniScoreboard() {

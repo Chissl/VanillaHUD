@@ -36,8 +36,6 @@ public class ModConfig extends Config {
     @SubConfig
     public static ScrollableTooltip scrollableTooltip = new ScrollableTooltip();
     @SubConfig
-    public static TabList tab = new TabList();
-    @SubConfig
     public static Title title = new Title();
     public static boolean hasMigratedPatcher = false;
     public static boolean doneDebugMigration = false;

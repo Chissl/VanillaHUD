@@ -4,7 +4,6 @@ import cc.polyfrost.oneconfig.libs.universal.UResolution;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import org.polyfrost.vanillahud.VanillaHUD;
-import org.polyfrost.vanillahud.hud.TabList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +16,6 @@ public class EntityRendererMixin {
 //        if (VanillaHUD.isCompactTab()) {
 //            return;
 //        }
-        TabList.isGuiIngame = false;
         ((GuiIngameForgeAccessor) Minecraft.getMinecraft().ingameGUI).drawPlayerList(UResolution.getScaledWidth(), UResolution.getScaledHeight());
     }
 }
